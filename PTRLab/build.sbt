@@ -6,3 +6,7 @@ lazy val root = (project in file("."))
   .settings(
     name := "PTRLab"
   )
+
+libraryDependencies ++= Seq(
+  "com.typesafe.akka" %% "akka-actor" % "2.6.20"
+)

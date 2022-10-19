@@ -1,3 +1,5 @@
+package Topics
+
 import play.api.libs.json._
 import scala.collection.mutable.ArrayBuffer
 

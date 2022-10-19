@@ -1,5 +1,6 @@
 package TCP
 
+import Topics.Topic
 import akka.actor.Actor
 import akka.io.Tcp.{ConnectionClosed, Received, Write}
 import akka.util.ByteString
@@ -16,7 +17,7 @@ class Handler extends Actor{
     /** Receive encoded data*/
     case Received(data) =>
       val decoded = data.decodeString("utf-8")
-      //todo handle decoded data
+      context.parent ! Topic(decoded, remote)
       sender() ! Write(ByteString("OK"))
     case remote: String =>
       this.remote = remote

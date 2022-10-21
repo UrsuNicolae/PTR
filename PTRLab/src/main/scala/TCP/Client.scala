@@ -14,8 +14,9 @@ import java.net.InetSocketAddress
  * Part of code is from @see [[https://github.com/akka/akka/blob/v2.6.20/akka-docs/src/test/scala/docs/io/IODocSpec.scala#L67-L103]]
  * Also @see [[https://doc.akka.io/docs/akka/current/io-tcp.html]] for additional explanation
  */
-class Client (host:String, port:Int) extends Actor {
-
+class Client (address:String) extends Actor {
+  val host: String = address.split(":")(0)
+  val port: Int = address.split(":")(1).toInt
   import context.system
 
   IO(Tcp) ! Connect(new InetSocketAddress(host, port))

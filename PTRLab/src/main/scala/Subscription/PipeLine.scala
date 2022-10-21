@@ -1,12 +1,12 @@
 package Subscription
 
 import Topics.CreateListener
-import akka.actor.{Actor, ActorRef}
+import akka.actor.{Actor, ActorRef, Props}
 
 import scala.collection.mutable.ListBuffer
 
 class PipeLine extends Actor {
-  //todo add invocation to worker actor
+  val worker: ActorRef = context.actorOf(Props[Worker], "worker")
   var listener_list = new ListBuffer[ActorRef]()
 
   override def receive: Receive = {

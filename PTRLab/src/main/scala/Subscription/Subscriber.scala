@@ -8,7 +8,7 @@ import scala.collection.mutable.ArrayBuffer
 
 class Subscriber extends Actor {
   val Manager: ActorRef = context.actorOf(Props(new Manager("localhost", 9999)))
-  val worker: ActorSelection = context.actorSelection("")//todo add path to pipeline actor
+  val worker: ActorSelection = context.actorSelection("")//todo add path to pipeline worker actor
 
   override def receive: Receive = {
     case topic: Topic =>

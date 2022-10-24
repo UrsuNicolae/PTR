@@ -40,7 +40,7 @@ class Client (address:String) extends Actor {
         case "stop" =>
           context.stop(self)
         case _ =>
-          Console.printf("Unknown message!")
+          Console.printf("Connected with unknown message!")
       }
     case _ =>
       Console.printf("Unknown message!")

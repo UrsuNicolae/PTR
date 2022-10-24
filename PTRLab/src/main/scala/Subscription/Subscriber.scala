@@ -18,7 +18,7 @@ class Subscriber extends Actor {
         operation_type = topic.getField("operation").toString().replace("\"", "")
       } catch {
         case e: Exception =>
-          Console.printf(s"Error: ${e.getMessage}")
+          Console.println(s"Error: ${e.getMessage}")
       }
 
       if (operation_type == "subscribe") {
@@ -37,7 +37,7 @@ class Subscriber extends Actor {
       }
       else {
         /** unknown operation type*/
-        Console.printf("Error: Unknown operation type")
+        Console.println("Error: Unknown operation type")
       }
   }
 }

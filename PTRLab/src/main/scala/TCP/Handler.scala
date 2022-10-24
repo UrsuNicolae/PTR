@@ -22,7 +22,7 @@ class Handler extends Actor{
     case remote: String =>
       this.remote = remote
     case _: ConnectionClosed =>
-      Console.printf("Connection has been closed")
+      Console.println("Connection has been closed")
       context stop self
   }
 }

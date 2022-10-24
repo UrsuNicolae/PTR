@@ -23,7 +23,7 @@ class Client (address:String) extends Actor {
 
   override def receive: Receive = {
     case CommandFailed(_: Connect) =>
-      Console.printf("Could not connect")
+      Console.println("Could not connect")
       context.stop(self)
 
     /** Connecting to remote address*/
@@ -40,9 +40,9 @@ class Client (address:String) extends Actor {
         case "stop" =>
           context.stop(self)
         case _ =>
-          Console.printf("Connected with unknown message!")
+          Console.println("Connected with unknown message!")
       }
     case _ =>
-      Console.printf("Unknown message!")
+      Console.println("Unknown message!")
   }
 }

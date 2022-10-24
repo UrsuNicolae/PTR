@@ -20,9 +20,9 @@ class Manager(host: String, port: Int) extends Actor{
 
   override def receive: Receive = {
     case Bound(local) =>
-      Console.printf(s"Server listening on $local")
+      Console.println(s"Server listening on $local")
     case Connected(remote, local) =>
-      Console.printf(s"New connnection: $local -> $remote")
+      Console.println(s"New connnection: $local -> $remote")
       val handler = context.actorOf(Props[Handler])
       sender() ! Register(handler)
       handler ! remote.toString

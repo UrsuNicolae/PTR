@@ -11,7 +11,9 @@ class PipeLine extends Actor {
 
   override def receive: Receive = {
     case createListener: CreateListener =>
-      //todo add subscription to listener actor
+      val new_listener = context.actorOf(Props[Listener])
+      new_listener ! createListener
+      listener_list += new_listener
 
     case _ =>
       Console.println("Unknown message")

@@ -3,7 +3,7 @@ package Topics
 import play.api.libs.json._
 import scala.collection.mutable.ArrayBuffer
 
-case class Topic(stringTopic: String, sender: String = ""){
+case class JsonMessage(stringTopic: String, sender: String = ""){
   /** @see [[https://github.com/playframework/play-json]]*/
   val json: JsValue = Json.parse(stringTopic)
 

@@ -17,7 +17,7 @@ class Handler extends Actor{
     /** Receive encoded data*/
     case Received(data) =>
       val decoded = data.decodeString("utf-8")
-      context.parent ! Topic(decoded, remote)
+      context.parent ! JsonMessage(decoded, remote)
       sender() ! Write(ByteString("OK"))
     case remote: String =>
       this.remote = remote

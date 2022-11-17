@@ -1,7 +1,7 @@
 package Subscription
 
 import TCP.Manager
-import Topics.{CreateListener, Topic}
+import Topics.{CreateListener, JsonMessage}
 import akka.actor.{Actor, ActorRef, ActorSelection, Props}
 
 class Listener() extends Actor {
@@ -12,8 +12,8 @@ class Listener() extends Actor {
     case createListener: CreateListener =>
       tcpManager = context.actorOf(Props(new Manager("localhost", createListener.port)))
 
-    case jsTopic: Topic =>
-      workerRef ! jsTopic
+    case message: JsonMessage =>
+      workerRef ! message
 
     case a =>
       Console.println("unknown topic:", a)

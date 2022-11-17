@@ -1,7 +1,7 @@
 package Subscription
 
 import TCP.Manager
-import Topics.{Subscribe, Topic, Unsubscribe}
+import Topics.{Subscribe, JsonMessage, Unsubscribe}
 import akka.actor.{Actor, ActorRef, ActorSelection, Props}
 
 import scala.collection.mutable.ArrayBuffer
@@ -11,26 +11,26 @@ class Subscriber extends Actor {
   val worker: ActorSelection = context.actorSelection("akka://default/user/pipeline/worker")
 
   override def receive: Receive = {
-    case topic: Topic =>
+    case message: JsonMessage =>
       var operation_type = ""
       try {
         /** GetOperation type*/
-        operation_type = topic.getField("operation").toString().replace("\"", "")
+        operation_type = message.getField("operation").toString().replace("\"", "")
       } catch {
         case e: Exception =>
           Console.println(s"Error: ${e.getMessage}")
       }
 
       if (operation_type == "subscribe") {
-        val topic_arr = topic.getField("topic").toString().replace("[", "").replace("]", "").split(',')
-        val consumer_address = topic.getField("consumer_address").toString().replace("\"", "")
+        val topic_arr = message.getField("topic").toString().replace("[", "").replace("]", "").split(',')
+        val consumer_address = message.getField("consumer_address").toString().replace("\"", "")
 
         /** subscribe worker*/
         worker ! Subscribe(consumer_address, topic_arr.to(ArrayBuffer))
       }
       else if (operation_type == "unsubscribe") {
-        val topic_arr = topic.getField("topic").toString().replace("[", "").replace("]", "").split(',')
-        val consumer_address = topic.getField("consumer_address").toString().replace("\"", "")
+        val topic_arr = message.getField("topic").toString().replace("[", "").replace("]", "").split(',')
+        val consumer_address = message.getField("consumer_address").toString().replace("\"", "")
 
         /** unsubscribe worker*/
         worker ! Unsubscribe(consumer_address, topic_arr.to(ArrayBuffer))

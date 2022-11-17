@@ -1,6 +1,6 @@
 package TCP
 
-import Topics.Topic
+import Topics.JsonMessage
 import akka.actor.Actor
 import akka.io.Tcp.{ConnectionClosed, Received, Write}
 import akka.util.ByteString

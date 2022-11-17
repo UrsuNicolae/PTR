@@ -1,6 +1,6 @@
 package TCP
 
-import Topics.Topic
+import Topics.JsonMessage
 import akka.actor.{Actor, Props}
 import akka.io.Tcp.{Bind, Bound, Connected, Message, Register}
 import akka.io.{IO, Tcp}
@@ -28,7 +28,6 @@ class Manager(host: String, port: Int) extends Actor{
       sender() ! Register(handler)
       handler ! remote.toString
     case jsonMessage: JsonMessage =>
-      Console.println(s"Message received")
       context.parent ! jsonMessage
   }
 }

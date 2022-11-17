@@ -1,7 +1,7 @@
 package Subscription
 
 import TCP.Client
-import Topics.{Subscribe, Topic, Unsubscribe}
+import Topics.{Subscribe, JsonMessage, Unsubscribe}
 import akka.actor.{Actor, ActorRef, Props}
 import akka.util.ByteString
 
@@ -46,15 +46,15 @@ class Worker() extends Actor {
         consumerActors -= unsubscribe.consumerAddress
       }
 
-    case topicMessage: Topic =>
-      val topic = topicMessage.getTopic
+    case message: JsonMessage =>
+      val topic = message.getTopic
       // Check if topic is already present in the map
       if (topicsConsumer.contains(topic)) {
         // Get the array of consumers for the topic
         val consumer_arr = topicsConsumer(topic)
         // For each consumer, send the message
         for (consumer_address <- consumer_arr) {
-          val bytes = topicMessage.json.toString.getBytes("utf-8")
+          val bytes = message.json.toString.getBytes("utf-8")
           consumerActors(consumer_address) ! ByteString.fromArray(bytes)
         }
       }

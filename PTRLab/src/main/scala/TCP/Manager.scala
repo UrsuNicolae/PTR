@@ -28,6 +28,7 @@ class Manager(host: String, port: Int) extends Actor{
       sender() ! Register(handler)
       handler ! remote.toString
     case jsonMessage: JsonMessage =>
+      //forwad message to parent actor
       context.parent ! jsonMessage
   }
 }

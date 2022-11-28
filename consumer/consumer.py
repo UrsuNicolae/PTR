@@ -50,10 +50,13 @@ class Consumer:
             if data_str == "":
                 continue
             data_json = json.loads(data_str)
-
+            print("Received: " + str(data_json['message']['tweet']['user']['time_zone']))
+            print("Received: " + str(data_json))
+            print()
             self.received += 1
             if data_json['message']['tweet']['user']['time_zone'] in self.topic_set:
                 self.correct += 1
+                #print("Received: " + str(data_json['message']['tweet']['user']['time_zone']))
             else:
                 self.incorrect += 1
 

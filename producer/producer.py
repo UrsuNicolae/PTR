@@ -3,6 +3,7 @@ import socket
 import threading
 import requests
 import sseclient
+import time
 
 # Producer is a wrapper for the docker container producer.
 # It opens the two sse streams and sends the data to the message broker.
@@ -34,6 +35,7 @@ class Producer:
         self.socket.connect((self.broker_host, self.broker_port))
 
         while self.work:
+            time.sleep(1)
             try:
                 msg = next(messages)  # Exception when stream sends 0 bytes of data
                 json.loads(msg.data)  # Exception when msg.data is not a json
@@ -42,6 +44,7 @@ class Producer:
 
             try:
                 self.socket.send(msg.data.encode('utf-8'))
+                print("Sent: " + str(msg.data))
                 response = self.socket.recv(1024)
             except OSError:
                 return
@@ -50,9 +53,6 @@ class Producer:
 
             if response == b'OK':
                 self.messages_received += 1
-
-            if self.messages_sent % 100 == 0:
-                print("Sent: " + str(self.messages_sent))
 
         print("Connection closed")
         print("Sent " + str(self.messages_sent) + " messages to the message broker")
